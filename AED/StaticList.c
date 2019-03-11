@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 
 /*
     "Lista Sequencial Estática"
@@ -63,6 +64,10 @@ int SListRemoveFirstPosition(StaticList* li);
 
 int SListRemove(StaticList* li, int registration);
 
+int findByPosition(StaticList* li, int position, Student *s);
+
+int findByRegistration(StaticList* li, int position, Student *s);
+
 ///Arquivo "StaticList.c"
 struct staticList
 {
@@ -86,10 +91,12 @@ StaticList* createSList()
     return li;
 }
 
+
 void SListFree(StaticList* li)
 {
     free(li);
 }
+
 
 int SListSize(StaticList* li)
 {
@@ -99,6 +106,7 @@ int SListSize(StaticList* li)
     return li->amount;
 }
 
+
 int SListIsFull(StaticList* li)
 {
     if(li == NULL)
@@ -107,6 +115,7 @@ int SListIsFull(StaticList* li)
     return li->amount == MAX;
 }
 
+
 int SListIsEmpty(StaticList* li)
 {
     if(li == NULL)
@@ -114,6 +123,7 @@ int SListIsEmpty(StaticList* li)
 
     return li->amount == 0;
 }
+
 
 int SListInsertInLastPosition(StaticList* li, Student s)
 {
@@ -127,6 +137,7 @@ int SListInsertInLastPosition(StaticList* li, Student s)
     li->amount++;
     return 1;
 }
+
 
 int SListInsertInFirstPosition(StaticList* li, Student s)
 {
@@ -166,6 +177,7 @@ int SListInsertInOrder(StaticList* li, Student s)
 
 }
 
+
 int SListRemoveLastPosition(StaticList* li)
 {
     if(li == NULL)
@@ -177,6 +189,7 @@ int SListRemoveLastPosition(StaticList* li)
     li->amount--;
     return 1;
 }
+
 
 int SListRemoveFirstPosition(StaticList* li)
 {
@@ -193,6 +206,7 @@ int SListRemoveFirstPosition(StaticList* li)
     return 1;
 }
 
+
 int SListRemove(StaticList* li, int registration)
 {
     if(li == NULL)
@@ -202,7 +216,8 @@ int SListRemove(StaticList* li, int registration)
         return 0;
 
     int i = 0;
-    while(i < li->amount && li->data[i].registration != registration) i++;
+    while(i < li->amount && li->data[i].registration != registration)
+        i++;
 
     if(i == li->amount) //not found
         return 0;
@@ -211,6 +226,33 @@ int SListRemove(StaticList* li, int registration)
         li->data[i] = li->data[i + 1];
     li->amount--;
 
+    return 1;
+}
+
+
+int findByPosition(StaticList* li, int position, Student *s)
+{
+    if(li == NULL || position <= 0 || position > li->amount)
+        return 0;
+
+    *s = li->data[position - 1];
+    return 1;
+}
+
+
+int findByRegistration(StaticList* li, int registration, Student *s)
+{
+    if(li == NULL)
+        return 0;
+
+    int i = 0;
+    while(i < li->amount && li->data[i].registration != registration)
+        i++;
+
+    if(i == li->amount) // not found
+        return 0;
+
+    *s = li->data[i];
     return 1;
 }
 
@@ -226,13 +268,24 @@ void PrintSList(StaticList* li)
     printf("\n");
 }
 
+
+void PrintStudent(Student s)
+{
+    printf("Student:\n");
+    printf("\tRegistration: %d\n",s.registration);
+    printf("\tName: %s\n",s.name);
+    printf("\tScore: %2.2f | %2.2f | %2.2f\n", s.score1, s.score2, s.score3);
+    printf("\n");
+}
+
+
 void TestStaticList()
 {
     StaticList *li;
     li = createSList();
 
     Student s =  {67004, "Ana", 12,13,14};
-    printf("Student:\n\tRegistration: %d \n\tName: %s\n\tScore: %2.2f | %2.2f | %2.2f\n\n",s.registration,s.name, s.score1, s.score2, s.score3);
+    PrintStudent(s);
 
     SListInsertInLastPosition(li, s);
     PrintSList(li);
@@ -251,11 +304,19 @@ void TestStaticList()
     //SListRemoveFirstPosition(li);
     //PrintSList(li);
 
-    SListRemove(li,67009);
-    PrintSList(li);
+    //SListRemove(li,67009);
+    //PrintSList(li);
 
-    SListRemove(li,67002);
-    PrintSList(li);
+    //SListRemove(li,67002);
+    //PrintSList(li);
+
+    Student s4;
+    findByPosition(li, 2, &s4);
+    PrintStudent(s4);
+
+    Student s5;
+    findByRegistration(li, 67000, &s5);
+    PrintStudent(s5);
 
     int size = SListSize(li);
     printf("Size: %d \n", size);
