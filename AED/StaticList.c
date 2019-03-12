@@ -66,7 +66,7 @@ int SListRemove(StaticList* li, int registration);
 
 int findByPosition(StaticList* li, int position, Student *s);
 
-int findByRegistration(StaticList* li, int position, Student *s);
+int findByRegistration(StaticList* li, int registration, Student *s);
 
 ///Arquivo "StaticList.c"
 struct staticList
@@ -274,7 +274,7 @@ void PrintStudent(Student s)
     printf("Student:\n");
     printf("\tRegistration: %d\n",s.registration);
     printf("\tName: %s\n",s.name);
-    printf("\tScore: %2.2f | %2.2f | %2.2f\n", s.score1, s.score2, s.score3);
+    printf("\tScore: %.2f | %.2f | %.2f\n", s.score1, s.score2, s.score3);
     printf("\n");
 }
 
