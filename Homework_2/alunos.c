@@ -38,8 +38,6 @@ void InserirElementoUser(Ptr_No *Ptr);
 //Declaração da função para procurar elemento através do número mecanográfico
 void ProcurarElementoNum(Ptr_No *Ptr, int valor);
 
-
-
 //Declaração da função para remover um nó
 void RemoverNo(Ptr_No *Ptr_Elem);
 
@@ -50,8 +48,13 @@ void RemoverElemento(Ptr_No *Ptr, int valor);
 void VerLista(Ptr_No *Ptr);
 
 ///<<< TPC >>>///
+//Procurar o melhor aluno
 Elemento ProcurarMelhorAluno(Ptr_No *Ptr);
+
+//Apresentar dados de um aluno
 void ImprimeAluno(Elemento aluno);
+
+//Procurar aluno pelo numero
 Ptr_No ProcuraraAluno_Num(Ptr_No *Ptr, int num);
 
 // Programa Principal
